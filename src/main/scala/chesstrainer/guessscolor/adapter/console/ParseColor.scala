@@ -1,8 +1,9 @@
 package chesstrainer.guessscolor.adapter.console
 
-import chesstrainer.guessscolor.domain.GuessSquareColorPuzzle.SquareColor
+import chesstrainer.guessscolor.domain.GuessSquareColorCheckAnswer.SquareColor
 
 object ParseColor {
+
   def parse(color: String): Either[InvalidColor, SquareColor] =
     color.toLowerCase match {
       case "d" => Right(SquareColor.Dark)

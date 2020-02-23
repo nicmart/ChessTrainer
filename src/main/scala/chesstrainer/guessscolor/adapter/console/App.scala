@@ -4,12 +4,12 @@ import cats.effect
 import cats.effect.{ExitCode, IO, IOApp}
 import cats.implicits._
 import chesstrainer.common.adapter.catsio.IORandom
-import chesstrainer.guessscolor.domain.{GenerateGuessSquareColorQuestion, GuessSquareColorPuzzle, PuzzleLoop}
+import chesstrainer.guessscolor.domain.{GenerateGuessSquareColorQuestion, GuessSquareColorCheckAnswer, PuzzleLoop}
 
 object App extends IOApp {
 
   private val generateGuessSquareColorQuestion = new GenerateGuessSquareColorQuestion[IO](new IORandom)
-  private val guessSquareColor                 = new GuessSquareColorPuzzle[IO]
+  private val guessSquareColor                 = new GuessSquareColorCheckAnswer[IO]
   private val interactor                       = new ConsoleInteractor[IO](effect.Console.io)
   private val loop                             = new PuzzleLoop[IO](generateGuessSquareColorQuestion, guessSquareColor, interactor)
 

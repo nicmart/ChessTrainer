@@ -3,11 +3,11 @@ package chesstrainer.guessscolor.domain
 import cats.MonadError
 import cats.implicits._
 import chesstrainer.guessscolor.adapter.console.ParseColor
-import chesstrainer.guessscolor.domain.GuessSquareColorPuzzle.GuessSquareColor
+import chesstrainer.guessscolor.domain.GuessSquareColorCheckAnswer.GuessSquareColor
 
 final class PuzzleLoop[F[_]](
     questionGenerator: GenerateGuessSquareColorQuestion[F],
-    puzzle: GuessSquareColorPuzzle[F],
+    puzzle: GuessSquareColorCheckAnswer[F],
     interactor: Interactor[F]
 )(implicit M: MonadError[F, Throwable]) {
   import interactor._
@@ -30,7 +30,7 @@ final class PuzzleLoop[F[_]](
     for {
       input           <- askColorOfSquare(question.square)
       squareColor     <- M.fromEither(ParseColor.parse(input))
-      isAnswerCorrect <- puzzle.guess(question)(squareColor)
+      isAnswerCorrect <- puzzle.check(question)(squareColor)
       _               <- showResult(isAnswerCorrect)
     } yield isAnswerCorrect
 }
